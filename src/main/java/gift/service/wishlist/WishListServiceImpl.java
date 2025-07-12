@@ -32,20 +32,16 @@ public class WishListServiceImpl implements WishListService {
     @Override
     public List<ProductResponseDto> findAll(Long memberId) {
         List<Wish> wishList = wishListRepository.findAll(memberId);
-        List<ProductResponseDto> responseDtoList = new ArrayList<>();
-
-        for (Wish wish : wishList) {
-            Product product = productRepository.findById(wish.getProductId())
-                .orElseThrow(() -> new ResourceNotFoundException());
-
-            responseDtoList.add(
-                new ProductResponseDto(product.getId(), product.getName(), product.getPrice(),
-                    product.getImageUrl()));
-        }
-
-        return responseDtoList.stream()
-            .sorted(Comparator.comparing(ProductResponseDto::id))
+        List<Long> idList = wishList.stream()
+            .map(Wish::getProductId)
             .toList();
+
+        List<Product> productList = productRepository.findAllById(idList);
+        List<ProductResponseDto> responseDtoList = productList.stream()
+            .map(ProductResponseDto::from)
+            .toList();
+
+        return responseDtoList;
     }
 
     @Override

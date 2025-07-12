@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -58,6 +59,22 @@ public class ProductRepositoryImpl implements ProductRepository {
         } catch (DataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<Product> findAllById(List<Long> idList) {
+        if (idList == null || idList.isEmpty()) {
+            return List.of();
+        }
+
+        String placeholders = idList.stream()
+            .map(id -> "?")
+            .collect(Collectors.joining(", "));
+
+        String sql = "select * from product where id in (" + placeholders + ") order by id";
+
+        List<Product> productList = jdbcTemplate.query(sql, PRODUCT_ROW_MAPPER, idList.toArray());
+        return productList;
     }
 
     @Override
