@@ -4,12 +4,12 @@ import gift.entity.Wish;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.boot.autoconfigure.task.TaskExecutionProperties.Simple;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class WishListRepositoryImpl implements WishListRepository {
@@ -26,6 +26,7 @@ public class WishListRepositoryImpl implements WishListRepository {
 
 
     @Override
+    @Transactional
     public Wish create(Wish wish) {
         String sql = "insert into wishlist(product_id, member_id) values (:productId, :memberId)";
 
@@ -54,6 +55,7 @@ public class WishListRepositoryImpl implements WishListRepository {
     }
 
     @Override
+    @Transactional
     public int delete(Long productId, Long memberId) {
         String sql = "delete from wishlist where product_id = :productId and member_id = :memberId";
 
