@@ -3,7 +3,7 @@ package gift.service.member;
 import gift.dto.member.MemberPasswordChangeDto;
 import gift.dto.member.MemberRequestDto;
 import gift.dto.member.MemberResponseDto;
-import gift.dto.member.MemberResponseDto2;
+import gift.dto.member.MemberCredentialDto;
 import gift.entity.Member;
 import gift.repository.member.MemberRepository;
 import gift.util.JwtUtil;
@@ -81,10 +81,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponseDto2 findById(Long id) {
+    public MemberCredentialDto findById(Long id) {
         Member member = memberRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN));
 
-        return new MemberResponseDto2(member.getId(), member.getEmail(), member.getPassword());
+        return new MemberCredentialDto(member.getId(), member.getEmail(), member.getPassword());
     }
 }

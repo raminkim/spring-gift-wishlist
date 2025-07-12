@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import gift.controller.wishlist.WishListController;
-import gift.dto.member.MemberResponseDto2;
+import gift.dto.member.MemberCredentialDto;
 import gift.exception.UnAuthenicatedException;
 import gift.resolver.LoginMemberArgumentResolver;
 import gift.service.member.MemberService;
@@ -54,7 +54,7 @@ public class WishListControllerTest {
         given(jwtUtil.getMemberIdFromToken(token))
             .willReturn(memberId);
         given(memberService.findById(memberId))
-            .willReturn(new MemberResponseDto2(memberId, email, encryptedPassword));
+            .willReturn(new MemberCredentialDto(memberId, email, encryptedPassword));
 
         mockmvc.perform(post("/api/wishes/1")
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
@@ -87,7 +87,7 @@ public class WishListControllerTest {
         given(jwtUtil.getMemberIdFromToken(token))
             .willReturn(memberId);
         given(memberService.findById(memberId))
-            .willReturn(new MemberResponseDto2(memberId, email, encryptedPassword));
+            .willReturn(new MemberCredentialDto(memberId, email, encryptedPassword));
 
         mockmvc.perform(get("/api/wishes")
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
@@ -123,7 +123,7 @@ public class WishListControllerTest {
         given(jwtUtil.getMemberIdFromToken(token))
             .willReturn(memberId);
         given(memberService.findById(memberId))
-            .willReturn(new MemberResponseDto2(memberId, email, encryptedPassword));
+            .willReturn(new MemberCredentialDto(memberId, email, encryptedPassword));
         
         mockmvc.perform(delete("/api/wishes/1")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)

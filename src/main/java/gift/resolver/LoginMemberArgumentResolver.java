@@ -1,6 +1,6 @@
 package gift.resolver;
 
-import gift.dto.member.MemberResponseDto2;
+import gift.dto.member.MemberCredentialDto;
 import gift.entity.LoginMember;
 import gift.entity.Member;
 import gift.exception.UnAuthenicatedException;
@@ -44,7 +44,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 
         String token = authenicatedHeader.substring(7);
         Long memberId = jwtUtil.getMemberIdFromToken(token);
-        MemberResponseDto2 responseDto = memberService.findById(memberId);
+        MemberCredentialDto responseDto = memberService.findById(memberId);
 
         return new Member(responseDto.id(), responseDto.email(), responseDto.password());
     }

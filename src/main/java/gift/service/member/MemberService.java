@@ -3,7 +3,7 @@ package gift.service.member;
 import gift.dto.member.MemberPasswordChangeDto;
 import gift.dto.member.MemberRequestDto;
 import gift.dto.member.MemberResponseDto;
-import gift.dto.member.MemberResponseDto2;
+import gift.dto.member.MemberCredentialDto;
 
 public interface MemberService {
 
@@ -15,5 +15,5 @@ public interface MemberService {
 
     void resetPassword(MemberRequestDto requestDto);
 
-    MemberResponseDto2 findById(Long id);
+    MemberCredentialDto findById(Long id);
 }
