@@ -3,6 +3,7 @@ package gift.controller.wishlist;
 import gift.dto.product.ProductResponseDto;
 import gift.entity.LoginMember;
 import gift.entity.Member;
+import gift.entity.Wish;
 import gift.service.wishlist.WishListService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,13 @@ public class WishListController {
     }
 
     @PostMapping("/{productId}")
-    public ResponseEntity<Void> create(
+    public ResponseEntity<Wish> create(
         @PathVariable Long productId,
         @LoginMember Member member
     ) {
-        wishListService.create(productId, member.getId());
+        Wish wish = wishListService.create(productId, member.getId());
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(wish, HttpStatus.CREATED);
     }
 
     @GetMapping

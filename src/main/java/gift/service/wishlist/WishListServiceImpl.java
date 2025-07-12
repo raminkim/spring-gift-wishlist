@@ -24,9 +24,11 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
-    public void create(Long productId, Long memberId) {
+    public Wish create(Long productId, Long memberId) {
         Wish wish = wishListRepository.create(
             new Wish(productId, memberId));
+
+        return wish;
     }
 
     @Override
